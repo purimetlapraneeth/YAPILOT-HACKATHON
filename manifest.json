@@ -1,0 +1,26 @@
+
+{
+  "manifest_version": 3,
+  "name": "YAPILOT - VoicePilot",
+  "version": "1.0.0",
+  "description": "Control webpages using voice commands.",
+  "permissions": [
+    "activeTab"
+  ],
+  "action": {
+    "default_title": "YAPILOT VoicePilot",
+    "default_popup": "voicepilot-popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "content/content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
