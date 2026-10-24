@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YAPILOT — VoicePilot</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand-mark" aria-hidden="true">Y</div>
+      <div>
+        <h1>YAPILOT</h1>
+        <p class="subtitle">Hands-free browsing</p>
+      </div>
+      <span class="live-pill"><span class="live-dot"></span> READY</span>
+    </header>
+
+    <section class="intro">
+      <p class="eyebrow">VOICE COMMAND CENTER</p>
+      <h2>Browse with your voice.</h2>
+      <p class="intro-copy">Tell VoicePilot what you want to do. We’ll show the command and ask before unclear or sensitive actions.</p>
+    </section>
+
+    <section class="voice-panel" aria-labelledby="command-heading">
+      <div class="panel-heading">
+        <label id="command-heading" for="commandInput">Your command</label>
+        <span id="speechSupport" class="support-note">Checking microphone…</span>
+      </div>
+
+      <div class="input-row">
+        <input id="commandInput" type="text" autocomplete="off"
+          placeholder='Try “scroll down” or “click Apply”'
+          aria-label="Type a browser command">
+        <button id="sendButton" class="send-button" type="button" aria-label="Send typed command" title="Send command">➜</button>
+      </div>
+
+      <button id="micButton" class="mic-button" type="button">
+        <span class="mic-icon" aria-hidden="true">🎙</span>
+        <span id="micButtonText">Start speaking</span>
+      </button>
+
+      <div class="transcript-box" aria-live="polite" aria-atomic="true">
+        <span class="transcript-label">TRANSCRIPTION</span>
+        <p id="transcriptText">Your spoken words will appear here.</p>
+      </div>
+    </section>
+
+    <section class="status-card" aria-live="polite" aria-atomic="true">
+      <div id="statusIcon" class="status-icon" aria-hidden="true">✦</div>
+      <div class="status-content">
+        <p id="statusTitle" class="status-title">Ready when you are</p>
+        <p id="statusMessage" class="status-message">Open a webpage, then speak or type a command.</p>
+      </div>
+    </section>
+
+    <section id="choiceSection" class="choice-section hidden">
+      <p class="section-label">WHICH ONE DID YOU MEAN?</p>
+      <div id="choiceList" class="choice-list"></div>
+    </section>
+
+    <section id="confirmationSection" class="confirmation-section hidden">
+      <p class="section-label">CONFIRM ACTION</p>
+      <p id="confirmationText" class="confirmation-text">This action needs your confirmation.</p>
+      <div class="confirmation-actions">
+        <button id="confirmButton" class="confirm-button" type="button">Yes, continue</button>
+        <button id="cancelButton" class="cancel-button" type="button">Cancel</button>
+      </div>
+    </section>
+
+    <footer>
+      <span><span class="footer-shield">✓</span> You stay in control</span>
+      <span>VoicePilot MVP</span>
+    </footer>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>
