@@ -4,7 +4,7 @@
   const pendingFinds = new Map();
   const highlightTimers = new WeakMap();
   const pendingLifetimeMs = 30_000;
-  const highlightDurationMs = 3_000;
+  const highlightDurationMs = 4_000;
 
   function normalize(value) {
     return String(value || "").replace(/\s+/g, " ").trim().toLocaleLowerCase();
@@ -106,15 +106,17 @@
   }
 
   function highlight(element) {
-    const previousTimer = highlightTimers.get(element);
-    if (previousTimer) window.clearTimeout(previousTimer);
+    const previousHighlight = highlightTimers.get(element);
+    if (previousHighlight) window.clearTimeout(previousHighlight.timer);
 
-    const originalOutline = element.style.getPropertyValue("outline");
-    const originalOutlinePriority = element.style.getPropertyPriority("outline");
-    const originalOffset = element.style.getPropertyValue("outline-offset");
-    const originalOffsetPriority = element.style.getPropertyPriority("outline-offset");
-    element.style.setProperty("outline", "3px solid #ff6b35", "important");
+    const originalStyles = previousHighlight ? previousHighlight.originalStyles : {
+      outline: [element.style.getPropertyValue("outline"), element.style.getPropertyPriority("outline")],
+      outlineOffset: [element.style.getPropertyValue("outline-offset"), element.style.getPropertyPriority("outline-offset")],
+      backgroundColor: [element.style.getPropertyValue("background-color"), element.style.getPropertyPriority("background-color")]
+    };
+    element.style.setProperty("outline", "3px solid #ff00ff", "important");
     element.style.setProperty("outline-offset", "3px", "important");
+    element.style.setProperty("background-color", "rgba(255, 214, 0, 0.22)", "important");
 
     try {
       element.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
@@ -123,13 +125,18 @@
     }
 
     const timer = window.setTimeout(() => {
+      const [originalOutline, originalOutlinePriority] = originalStyles.outline;
+      const [originalOffset, originalOffsetPriority] = originalStyles.outlineOffset;
+      const [originalBackgroundColor, originalBackgroundColorPriority] = originalStyles.backgroundColor;
       if (originalOutline) element.style.setProperty("outline", originalOutline, originalOutlinePriority);
       else element.style.removeProperty("outline");
       if (originalOffset) element.style.setProperty("outline-offset", originalOffset, originalOffsetPriority);
       else element.style.removeProperty("outline-offset");
+      if (originalBackgroundColor) element.style.setProperty("background-color", originalBackgroundColor, originalBackgroundColorPriority);
+      else element.style.removeProperty("background-color");
       highlightTimers.delete(element);
     }, highlightDurationMs);
-    highlightTimers.set(element, timer);
+    highlightTimers.set(element, { timer, originalStyles });
   }
 
   function response(status, title, message, extra = {}) {

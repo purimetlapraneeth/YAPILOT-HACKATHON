@@ -121,7 +121,7 @@
   async function submitCommand(rawCommand) {
     const command = String(rawCommand || "").trim();
     if (!command) {
-      setStatus("Enter a command", "Speak or type something like “scroll down” or “click Apply”.", "warning");
+      setStatus("Enter a command", "Speak or type something like “find scholarships”.", "warning");
       commandInput.focus();
       return;
     }
