@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Scholarship application demo for VoicePilot accessibility testing">
+  <title>BrightFuture | Scholarship Application</title>
+  <link rel="stylesheet" href="demo.css">
+</head>
+
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="BrightFuture home">
+      <span class="brand-icon">B</span>
+      BrightFuture
+    </a>
+    <span class="demo-tag">VOICEPILOT DEMO</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">YOUR FUTURE STARTS HERE</p>
+        <h1>Big dreams deserve<br> <span>bright opportunities.</span></h1>
+        <p class="hero-description">
+          Take the next step towards your goals. Apply for the BrightFuture
+          Student Scholarship and let your potential shine.
+        </p>
+        <div class="hero-details">
+          <div>
+            <strong>₹50,000</strong>
+            <span>Scholarship award</span>
+          </div>
+          <div>
+            <strong>2026–27</strong>
+            <span>Academic year</span>
+          </div>
+          <div>
+            <strong>All eligible students</strong>
+            <span>Undergraduate applicants</span>
+          </div>
+        </div>
+        <button class="button button-light" id="heroApply" type="button">
+          Apply Now <span aria-hidden="true">↗</span>
+        </button>
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-orbit orbit-one"></div>
+        <div class="art-orbit orbit-two"></div>
+        <div class="art-card">
+          <span class="art-star">✳</span>
+          <p>YOUR POTENTIAL</p>
+          <h2>Has no<br>limits.</h2>
+          <div class="art-line"></div>
+          <span class="art-small">LEARN. GROW. ACHIEVE.</span>
+        </div>
+        <span class="floating-star star-one">✦</span>
+        <span class="floating-star star-two">✳</span>
+        <span class="floating-dot"></span>
+      </div>
+    </section>
+
+    <section class="application-section" id="application">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">LET'S GET STARTED</p>
+          <h2>Your application</h2>
+          <p class="section-description">
+            Share a few details below to get started. All fields are required.
+          </p>
+        </div>
+        <span class="step-label">STEP 1 OF 1</span>
+      </div>
+
+      <div class="form-layout">
+        <form id="applicationForm" class="application-card">
+          <div class="form-heading">
+            <div class="form-heading-icon" aria-hidden="true">✎</div>
+            <div>
+              <h3>Applicant details</h3>
+              <p>Enter your basic information.</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="field full-width">
+              <label for="fullName">Full name</label>
+              <input
+                id="fullName"
+                name="fullName"
+                type="text"
+                placeholder="e.g. Alex Johnson"
+                autocomplete="name"
+                required
+              >
+            </div>
+
+            <div class="field">
+              <label for="email">Email address</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="alex@example.com"
+                autocomplete="email"
+                required
+              >
+            </div>
+
+            <div class="field">
+              <label for="phone">Phone number</label>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                placeholder="+91 98765 43210"
+                autocomplete="tel"
+                required
+              >
+            </div>
+
+            <div class="field full-width">
+              <label for="course">Course / programme</label>
+              <select id="course" name="course" required>
+                <option value="">Select your programme</option>
+                <option value="engineering">Engineering & Technology</option>
+                <option value="science">Science & Research</option>
+                <option value="business">Business & Management</option>
+                <option value="arts">Arts & Humanities</option>
+                <option value="other">Other undergraduate programme</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="button button-secondary" id="clearForm" type="button">
+              Clear Form
+            </button>
+            <button class="button button-secondary" id="saveDraft" type="button">
+              Save Draft
+            </button>
+            <button class="button button-primary" type="submit">
+              Apply Now <span aria-hidden="true">→</span>
+            </button>
+          </div>
+
+          <p class="privacy-note">
+            <span aria-hidden="true">ⓘ</span>
+            Demo only. Your information is not submitted to any server.
+          </p>
+
+          <p id="feedback" class="feedback" role="status" aria-live="polite" hidden></p>
+        </form>
+
+        <aside class="side-panel">
+          <div class="side-icon" aria-hidden="true">✦</div>
+          <h3>A little support.<br>A big difference.</h3>
+          <p>
+            Your ambitions deserve a chance. The BrightFuture scholarship
+            celebrates students who are ready to learn, grow, and make an impact.
+          </p>
+          <div class="side-divider"></div>
+          <div class="side-point">
+            <span aria-hidden="true">✓</span>
+            <div>
+              <strong>Simple application</strong>
+              <p>Start with your basic details.</p>
+            </div>
+          </div>
+          <div class="side-point">
+            <span aria-hidden="true">✓</span>
+            <div>
+              <strong>Student-first approach</strong>
+              <p>Built with accessibility in mind.</p>
+            </div>
+          </div>
+          <div class="side-note">Designed for every kind of learner.</div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <a class="brand footer-brand" href="#">
+      <span class="brand-icon">B</span>
+      BrightFuture
+    </a>
+    <p>Demo application · Created for VoicePilot accessibility testing</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById("applicationForm");
+    const feedback = document.getElementById("feedback");
+    const fullName = document.getElementById("fullName");
+
+    function showFeedback(message, type = "success") {
+      feedback.textContent = message;
+      feedback.className = `feedback ${type}`;
+      feedback.hidden = false;
+    }
+
+    document.getElementById("heroApply").addEventListener("click", () => {
+      document.getElementById("application").scrollIntoView({
+        behavior: "smooth"
+      });
+      fullName.focus({ preventScroll: true });
+      showFeedback("You're in the right place! Start by entering your details.", "info");
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (!form.reportValidity()) return;
+
+      const applicant = fullName.value.trim();
+      showFeedback(
+        `Demo successful! The application for ${applicant} was validated, but nothing was submitted or stored.`,
+        "success"
+      );
+    });
+
+    document.getElementById("saveDraft").addEventListener("click", () => {
+      showFeedback(
+        "Draft preview complete. This demo does not permanently save your information.",
+        "info"
+      );
+    });
+
+    document.getElementById("clearForm").addEventListener("click", () => {
+      const confirmed = window.confirm(
+        "Are you sure you want to clear all the information entered in this form?"
+      );
+
+      if (confirmed) {
+        form.reset();
+        feedback.hidden = true;
+        fullName.focus();
+      }
+    });
+  </script>
+</body>
+</html>
