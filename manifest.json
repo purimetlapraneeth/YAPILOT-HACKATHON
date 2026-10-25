@@ -7,6 +7,9 @@
   "permissions": [
     "activeTab"
   ],
+  "background": {
+    "service_worker": "background/service-worker.js"
+  },
   "action": {
     "default_title": "YAPILOT VoicePilot",
     "default_popup": "voicepilot-popup/popup.html"

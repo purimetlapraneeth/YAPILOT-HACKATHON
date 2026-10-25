@@ -64,6 +64,13 @@
     return tab;
   }
 
+  async function getCurrentTabId() {
+    const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+    const tab = tabs && tabs[0];
+    if (!tab || typeof tab.id !== "number") throw new Error("No current browser tab was found.");
+    return tab.id;
+  }
+
   async function sendToPage(message) {
     const tab = await getActiveTab();
     return new Promise((resolve, reject) => {
@@ -80,6 +87,27 @@
         resolve(response);
       });
     });
+  }
+
+  async function sendToBackground(message) {
+    return new Promise((resolve, reject) => {
+      chrome.runtime.sendMessage(message, (response) => {
+        const lastError = chrome.runtime?.lastError;
+        if (lastError) {
+          reject(new Error("Could not reach VoicePilot's browser command handler. Reload the extension and try again."));
+          return;
+        }
+        if (!response) {
+          reject(new Error("Chrome did not return a response for that browser command."));
+          return;
+        }
+        resolve(response);
+      });
+    });
+  }
+
+  function isBrowserCommand(command) {
+    return /^(?:open\b|search\s+google\b)/i.test(command);
   }
 
   function renderResponse(response, requestId) {
@@ -129,13 +157,21 @@
     activeRequestId = makeRequestId();
     transcriptText.textContent = command;
     setBusy(true);
-    setStatus("Working on it…", "Sending your command to the active webpage.");
+    const useBrowserHandler = isBrowserCommand(command);
+    setStatus("Working on it…", useBrowserHandler ? "Sending a browser navigation command to Chrome." : "Sending your command to the active webpage.");
     try {
-      const response = await sendToPage({
-        type: "VOICEPILOT_COMMAND",
-        requestId: activeRequestId,
-        command
-      });
+      const response = useBrowserHandler
+        ? await sendToBackground({
+          type: "VOICEPILOT_BROWSER_COMMAND",
+          requestId: activeRequestId,
+          command,
+          currentTabId: await getCurrentTabId()
+        })
+        : await sendToPage({
+          type: "VOICEPILOT_COMMAND",
+          requestId: activeRequestId,
+          command
+        });
       renderResponse(response, activeRequestId);
     } catch (error) {
       setStatus("Page connection failed", error.message || "Unable to send command to the page.", "error");
